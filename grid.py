@@ -26,6 +26,14 @@ class Grid:
         self.cells = [[Cell(x, y) for y in range(self.cols)] for x in range(self.rows)]
         self.screen = screen
 
+    def clear(self):
+        for x in range(self.rows):
+            for y in range(self.cols):
+                self.cells[x][y].state = DEAD
+
+    def setCellAlive(self, x, y):
+        self.cells[x][y].state = ALIVE
+
     def getNextState(self, x, y):
         # Get number of living neighbors
         nbrsAlive = sum(

@@ -1,3 +1,4 @@
+from math import floor
 import pygame
 
 from grid import Grid
@@ -25,13 +26,23 @@ def main():
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (
-                event.type == pygame.KEYDOWN and event.key == pygame.K_c
+                event.type == pygame.KEYDOWN and event.key == pygame.K_x
             ):
                 running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                 grid.populateRandomCells(initialAlive)
+                grid.draw()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                 paused = not paused
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                grid.clear()
+                grid.draw()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mousePos = pygame.mouse.get_pos()
+                x = mousePos[0] // cellSize
+                y = mousePos[1] // cellSize
+                grid.setCellAlive(x, y)
+                grid.draw()
         if not paused:
             grid.update()
             clock.tick(15)
